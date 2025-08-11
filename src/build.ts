@@ -281,6 +281,15 @@ export async function buildProject(
         version: app.version,
       }),
       createArtifact({
+        path: join(artifactsPath, `${debug ? 'debug' : 'release'}/drone-hacks.pdb`),
+        name: app.name,
+        debug,
+        platform: targetInfo.platform,
+        arch,
+        version: app.version,
+      }),
+
+      createArtifact({
         path: join(
           artifactsPath,
           `bundle/nsis/${app.name}_${app.version}_${arch}-setup.exe.sig`,
