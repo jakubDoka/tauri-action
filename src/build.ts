@@ -71,9 +71,9 @@ export async function buildProject(
     root,
     targetInfo.platform === 'macos'
       ? {
-          TAURI_BUNDLER_DMG_IGNORE_CI:
-            process.env.TAURI_BUNDLER_DMG_IGNORE_CI ?? 'true',
-        }
+        TAURI_BUNDLER_DMG_IGNORE_CI:
+          process.env.TAURI_BUNDLER_DMG_IGNORE_CI ?? 'true',
+      }
       : undefined,
     retryAttempts,
   );
