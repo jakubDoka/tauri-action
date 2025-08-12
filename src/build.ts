@@ -88,6 +88,7 @@ export async function buildProject(
     .replace(/[()[\]{}]/g, '')
     .toLowerCase();
 
+
   const workspacePath = getWorkspaceDir(app.tauriPath) ?? app.tauriPath;
 
   const artifactsPath = join(
@@ -95,6 +96,16 @@ export async function buildProject(
     targetPath ?? '',
     profile ? profile : debug ? 'debug' : 'release',
   );
+
+  const files = readdirSync(artifactsPath);
+
+  console.log("listing contents of artifactsPath");
+  for (const file of files) {
+    const filePath = join(artifactsPath, file);
+    if (lstatSync(filePath).isFile()) {
+      console.log(filePath);
+    }
+  }
 
   let artifacts: Artifact[] = [];
 
@@ -281,7 +292,7 @@ export async function buildProject(
         version: app.version,
       }),
       createArtifact({
-        path: join(artifactsPath, `drone-hacks.pdb`),
+        path: join(artifactsPath, `${app.name}.pdb`),
         name: app.name,
         debug,
         platform: targetInfo.platform,
@@ -356,17 +367,6 @@ export async function buildProject(
               ? 'aarch64'
               : arch;
 
-
-    const files = readdirSync(artifactsPath);
-
-    console.log("listing contents of artifactsPath");
-    for (const file of files) {
-      const filePath = join(artifactsPath, file);
-      if (lstatSync(filePath).isFile()) {
-        console.log(filePath);
-      }
-    }
-
     artifacts = [
       createArtifact({
         path: join(
@@ -399,14 +399,6 @@ export async function buildProject(
         debug,
         platform: targetInfo.platform,
         arch: appImageArch,
-        version: app.version,
-      }),
-      createArtifact({
-        path: join(artifactsPath, `Drone-Hacks`),
-        name: app.name,
-        debug,
-        platform: targetInfo.platform,
-        arch,
         version: app.version,
       }),
       createArtifact({
