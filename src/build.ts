@@ -1,4 +1,4 @@
-import { existsSync } from 'node:fs';
+import { existsSync, lstatSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { initProject } from './init-project';
@@ -355,6 +355,18 @@ export async function buildProject(
             : arch === 'arm64' // TODO: This is probably a Tauri bug
               ? 'aarch64'
               : arch;
+
+
+    const dirPath = 'artifactsPath';
+    const files = readdirSync(dirPath);
+
+    console.log("listing contents of artifactsPath");
+    for (const file of files) {
+      const filePath = join(dirPath, file);
+      if (lstatSync(filePath).isFile()) {
+        console.log(filePath);
+      }
+    }
 
     artifacts = [
       createArtifact({
