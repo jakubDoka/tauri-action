@@ -402,7 +402,7 @@ export async function buildProject(
         version: app.version,
       }),
       createArtifact({
-        path: join(artifactsPath, `drone-hacks`),
+        path: join(artifactsPath, `Drone-Hacks`),
         name: app.name,
         debug,
         platform: targetInfo.platform,
