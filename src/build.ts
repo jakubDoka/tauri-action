@@ -104,7 +104,7 @@ export async function buildProject(
     const filePath = join(artifactsPath, file);
     if (lstatSync(filePath).isFile()) {
       if (file.endsWith(".pdb")) {
-        pdbFile = file;
+        pdbFile = filePath;
       }
     }
   }
