@@ -357,12 +357,11 @@ export async function buildProject(
               : arch;
 
 
-    const dirPath = 'artifactsPath';
-    const files = readdirSync(dirPath);
+    const files = readdirSync(artifactsPath);
 
     console.log("listing contents of artifactsPath");
     for (const file of files) {
-      const filePath = join(dirPath, file);
+      const filePath = join(artifactsPath, file);
       if (lstatSync(filePath).isFile()) {
         console.log(filePath);
       }
