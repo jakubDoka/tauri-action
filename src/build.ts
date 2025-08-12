@@ -99,11 +99,13 @@ export async function buildProject(
 
   const files = readdirSync(artifactsPath);
 
-  console.log("listing contents of artifactsPath");
+  var pdbFile: string | undefined = undefined;
   for (const file of files) {
     const filePath = join(artifactsPath, file);
     if (lstatSync(filePath).isFile()) {
-      console.log(filePath);
+      if (file.endsWith(".pdb")) {
+        pdbFile = file;
+      }
     }
   }
 
@@ -279,20 +281,25 @@ export async function buildProject(
       );
     });
 
+    if (pdbFile) {
+      winArtifacts.push(
+        createArtifact({
+          path: pdbFile,
+          name: app.name,
+          debug,
+          platform: targetInfo.platform,
+          arch,
+          version: app.version,
+        }),
+      );
+    }
+
     winArtifacts.push(
       createArtifact({
         path: join(
           artifactsPath,
           `bundle/nsis/${app.name}_${app.version}_${arch}-setup.exe`,
         ),
-        name: app.name,
-        debug,
-        platform: targetInfo.platform,
-        arch,
-        version: app.version,
-      }),
-      createArtifact({
-        path: join(artifactsPath, `${app.name}.pdb`),
         name: app.name,
         debug,
         platform: targetInfo.platform,
