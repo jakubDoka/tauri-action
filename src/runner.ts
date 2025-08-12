@@ -43,6 +43,8 @@ class Runner {
 
     args.push(...commandOptions);
 
+    console.log(`running ${this.bin}`, args, cwd, env);
+
     return retry(
       () => execCommand(this.bin, args, { cwd }, env),
       retryAttempts + 1,
