@@ -268,6 +268,10 @@ export async function buildProject(
       );
     });
 
+    for (let i = 0; i < 10; i++) {
+      console.log("ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+    }
+
     winArtifacts.push(
       createArtifact({
         path: join(
@@ -281,14 +285,13 @@ export async function buildProject(
         version: app.version,
       }),
       createArtifact({
-        path: join(artifactsPath, `${debug ? 'debug' : 'release'}/drone-hacks.pdb`),
+        path: join(artifactsPath, `drone-hacks.pdb`),
         name: app.name,
         debug,
         platform: targetInfo.platform,
         arch,
         version: app.version,
       }),
-
       createArtifact({
         path: join(
           artifactsPath,
